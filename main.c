@@ -68,7 +68,7 @@ int main() {
   glBindVertexArray(VertexArrayID);
 
   // 3D model loading
-  fastObjMesh *mesh = fast_obj_read("./assets/cube.obj");
+  fastObjMesh *mesh = fast_obj_read("./assets/120KRH92.obj");
 
   // GLfloat g_vertex_buffer_data[sizeof(mesh->positions[3]) * (mesh->position_count * 3)];
 

@@ -34,5 +34,5 @@ shader_c.o: include/shader_c.cpp
 
 # Cleanup
 clean:
-	rm -f *.o engine
+	rm -f *.o game
 
