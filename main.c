@@ -68,7 +68,7 @@ int main() {
   glBindVertexArray(VertexArrayID);
 
   // 3D model loading
-  fastObjMesh *mesh = fast_obj_read("./assets/120KRH92.obj");
+  fastObjMesh *mesh = fast_obj_read("./assets/hellcat.obj");
 
   // GLfloat g_vertex_buffer_data[sizeof(mesh->positions[3]) * (mesh->position_count * 3)];
 
@@ -136,6 +136,9 @@ int main() {
     printf("no raw mouse support\n");
     return 1;
   }
+
+  // same float count as vertices
+  GLfloat *color_data = malloc(vertex_floats_count * sizeof(GLfloat));
 
   float mouse_speed = 0.6f;
 
@@ -220,14 +223,10 @@ int main() {
     }
 
     // random colors per vertex 
-    GLfloat *color_data = malloc(vertex_floats_count * sizeof(GLfloat)); // same float count as vertices
     for (size_t i = 0; i < vertex_floats_count / 3; i++) { // one color per vertex
-      float r = (float)rand() / RAND_MAX;
-      float g = (float)rand() / RAND_MAX;
-      float b = (float)rand() / RAND_MAX;
-      color_data[i*3 + 0] = r;
-      color_data[i*3 + 1] = g;
-      color_data[i*3 + 2] = b;
+      color_data[i*3 + 0] = (float)rand() / RAND_MAX * 1.5;   // r
+      color_data[i*3 + 1] = (float)rand() / RAND_MAX * 0.5; // g
+      color_data[i*3 + 2] = (float)rand() / RAND_MAX * 0.5; // b
     }
 
     ////// MVP //////
@@ -271,7 +270,12 @@ int main() {
     // 2nd attribute buffer: colors
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glBufferData(GL_ARRAY_BUFFER, vertex_floats_count * sizeof(GLfloat), color_data, GL_STATIC_DRAW);
+    glBufferData(
+        GL_ARRAY_BUFFER, 
+        vertex_floats_count * sizeof(GLfloat),
+        color_data,
+        GL_STATIC_DRAW
+        );
     glVertexAttribPointer(
         1, // attribute 1 ????
         3, // size
