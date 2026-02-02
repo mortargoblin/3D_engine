@@ -15,17 +15,18 @@ int main() {
   srand(time(NULL));
 
   App app = {0};
+
+  // 1024 768
+  if (!app_init(&app, 1024, 768, "3D Engine")) {
+    return -1;
+  }
+
   InputState input;
 
   Camera camera = camera_create(
       (vec3){0.0f, 0.0f, 5.0f},
       (float)app.screen_width / app.screen_height
       );
-
-  // 1024 768
-  if (!app_init(&app, 1024, 768, "3D Engine")) {
-    return -1;
-  }
 
   input_init(app.window);
   renderer_init();
