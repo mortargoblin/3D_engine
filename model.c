@@ -5,18 +5,26 @@ void model_init(Model *model, Mesh *mesh) {
   glm_mat4_identity(model->transform);
 }
 
+Model model_create(Mesh *mesh) {
+  Model model = {0};
+  model.mesh = mesh;
+  glm_mat4_identity(model.transform);
+
+  return model;
+}
+
 void model_set_position(Model *model, vec3 pos) {
   glm_mat4_identity(model->transform);
   glm_translate(model->transform, pos);
 }
 
 void model_draw(const Model *model, GLuint shader_program) {
-  GLuint model_loc = glGetUniformLocation(
+  GLuint model_location = glGetUniformLocation(
       shader_program, 
       "model"
       );
   glUniformMatrix4fv(
-      model_loc, 
+      model_location, 
       1, 
       GL_FALSE, 
       &model->transform[0][0]

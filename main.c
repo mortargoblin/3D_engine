@@ -8,7 +8,8 @@
 #include "input.h"
 #include "camera.h"
 #include "mesh.h"
-// #include "model.h"
+#include "model.h"
+#include "scene.h"
 #include "renderer.h"
 
 int main() {
@@ -18,7 +19,7 @@ int main() {
   App app = {0};
 
   // 1024 768
-  if (!app_init(&app, 1024, 768, "3D Engine")) {
+  if (!app_init(&app, 1920, 1080, "3D Engine")) {
     return -1;
   }
 
@@ -32,13 +33,28 @@ int main() {
   input_init(app.window);
   renderer_init();
 
-  Mesh mesh = mesh_load_obj("assets/120KRH92.obj");
+  Mesh scene_meshes[] = {
+    mesh_load_obj("assets/120KRH92.obj"),
+    mesh_load_obj("assets/hellcat.obj")
+  };
 
-  mesh_generate_random_colors(&mesh);
+  int mesh_count = 2;
+  for (int i = 0; i < mesh_count; i++) {
+    mesh_generate_random_colors(&scene_meshes[i]);
+  }
 
-  /*
-  Model mortar;
-  model_init(&mortar, &mesh);
+  Model models[mesh_count * sizeof(Model)];
+
+  for (int i = 0; i < mesh_count; i++) {
+    models[i] = model_create(&scene_meshes[i]);
+  }
+
+  /* TODO: FIX
+  Scene scene = scene_create(2, models);
+  if (scene) {
+    printf("wtf\n");
+  }
+  printf("SCENE: %d\n", scene.model_count);
   */
 
   /////// MAIN LOOP ///////
@@ -59,7 +75,7 @@ int main() {
         (float)app.screen_width / app.screen_height
         );
 
-    renderer_draw(&mesh, &camera);
+    renderer_draw(models, &camera);
 
     app_swap_buffers(&app);
 
