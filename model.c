@@ -11,9 +11,26 @@ void model_set_position(Model *model, vec3 pos) {
 }
 
 void model_draw(const Model *model, GLuint shader_program) {
-  GLuint modelLoc = glGetUniformLocation(shader_program, "model");
-  glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model->transform[0][0]);
+  GLuint model_loc = glGetUniformLocation(
+      shader_program, 
+      "model"
+      );
+  glUniformMatrix4fv(
+      model_loc, 
+      1, 
+      GL_FALSE, 
+      &model->transform[0][0]
+      );
 
-  mesh_draw(model->mesh);
+  // mesh_draw(model->mesh);
+  glBindVertexArray(model->mesh->vao);
+  glDrawElements(
+      GL_TRIANGLES, 
+      model->mesh->index_count, 
+      GL_UNSIGNED_INT, 0
+      );
+
+  glBindVertexArray(0);
+  // 
 }
 

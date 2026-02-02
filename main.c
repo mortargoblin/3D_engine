@@ -8,6 +8,7 @@
 #include "input.h"
 #include "camera.h"
 #include "mesh.h"
+// #include "model.h"
 #include "renderer.h"
 
 int main() {
@@ -35,8 +36,12 @@ int main() {
 
   mesh_generate_random_colors(&mesh);
 
+  /*
+  Model mortar;
+  model_init(&mortar, &mesh);
+  */
+
   /////// MAIN LOOP ///////
-  double current_time = glfwGetTime();
   while(!app_should_close(&app)) {
 
     app_update_time(&app);

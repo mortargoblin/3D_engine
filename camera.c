@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-#define MAX_PITCH 1.5f   // ~86 degrees
+#define MAX_PITCH 1.5f // ~86 degrees
 
 static void clamp_pitch(float *pitch) {
   if (*pitch > MAX_PITCH)  *pitch = MAX_PITCH;

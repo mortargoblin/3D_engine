@@ -54,6 +54,10 @@ void renderer_draw(const Mesh *mesh, const Camera *camera) {
   mesh_draw(mesh);
 }
 
+void renderer_clear() {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void renderer_shutdown(void) {
   glDeleteProgram(program);
 }
