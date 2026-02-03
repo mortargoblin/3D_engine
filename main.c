@@ -33,40 +33,24 @@ int main() {
   input_init(app.window);
   renderer_init();
 
+  // create meshes
+  int mesh_count = 3;
   Mesh scene_meshes[] = {
     mesh_load_obj("assets/120KRH92.obj"),
-    mesh_load_obj("assets/hellcat.obj")
+    mesh_load_obj("assets/hellcat.obj"),
+    mesh_load_obj("assets/simple_house.obj")
   };
 
-  int mesh_count = 2;
-  for (int i = 0; i < mesh_count; i++) {
-    mesh_generate_random_colors(&scene_meshes[i]);
-  }
-
-  /*
+  // create models (mesh + transform etc)
   Model models[mesh_count * sizeof(Model)];
-
+  int model_count = 0;
   for (int i = 0; i < mesh_count; i++) {
     models[i] = model_create(&scene_meshes[i]);
+    model_count++;
   }
-  */
+  printf("MODEL COUNT: %d\n", model_count);
 
-  Model models[] = {
-    model_create(&scene_meshes[0]),
-    model_create(&scene_meshes[1]),
-  };
-  // TODO: FIX
-  Scene scene = scene_create(2, models);
-
-  printf("SCENE.MODEL_COUNT: %d\n", scene.model_count);
-  printf("SCENE.MODELS: %p\n", scene.models);
-
-  double model_pos = 10;
-  double model_spin_angle = 10;
-
-  for (int i = 0; i < 3; i++) {
-    printf("model transform: %f\n", scene.models[1].transform);
-  }
+  Scene scene = scene_create(model_count, models);
 
   /////// MAIN LOOP ///////
   while(!app_should_close(&app)) {
@@ -86,16 +70,12 @@ int main() {
         (float)app.screen_width / app.screen_height
         );
     
-    // haram: type mismatch etc
-    model_pos -= 0.01;
-    model_spin_angle -= 0.01;
-    model_set_position(&scene.models[1], (vec3){model_pos, 0.1, 0});
-    model_spin(&scene.models[1], model_spin_angle);
+    model_transform_update(&scene.models[1]);
+
+    // transform logic
 
     renderer_draw(&scene, &camera);
-
     app_swap_buffers(&app);
-
   }
 
   app_shutdown(&app);

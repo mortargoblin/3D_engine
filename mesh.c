@@ -68,6 +68,8 @@ Mesh mesh_load_obj(const char *path) {
   fast_obj_destroy(obj);
   free(indices);
 
+  mesh_generate_random_colors(&mesh);
+
   return mesh;
 }
 
