@@ -45,7 +45,7 @@ void camera_update(
 
   // prevent float overflow
   if (cam->yaw > GLM_PI * 2.0f) cam->yaw -= GLM_PI * 2.0f;
-  if (cam->yaw < 0.0f)          cam->yaw += GLM_PI * 2.0f;
+  if (cam->yaw < 0.0f) cam->yaw += GLM_PI * 2.0f;
 
   // direction vectors
   vec3 forward = {
@@ -69,6 +69,7 @@ void camera_update(
     velocity *= cam->sprint_multiplier;
   }
 
+  // TODO: swap out to conform to player pos, etc
   if (glm_vec3_norm(input->move) > 0.0f) {
     vec3 move = {0};
     glm_vec3_scale(forward, -input->move[2], move);

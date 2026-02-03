@@ -51,7 +51,7 @@ void renderer_draw(Scene *scene, const Camera *camera) {
       &mvp[0][0]
       );
 
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < scene->model_count; i++) {
     // what the fuuck
     // mesh_draw(scene->models[i].mesh);
     model_draw(&scene->models[i], program);
