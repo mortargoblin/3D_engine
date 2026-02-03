@@ -5,10 +5,12 @@
 
 typedef struct {
   int model_count;
-  Model models[];
+  Model *models;
   // some other stuff maybe idk
 } Scene;
 
-Scene scene_create(int model_count, Model models[]);
+Scene scene_create(
+    int model_count, Model models[]
+    );
 
 #endif // SCENE_H

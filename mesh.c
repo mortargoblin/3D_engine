@@ -73,6 +73,7 @@ Mesh mesh_load_obj(const char *path) {
 
 
 void mesh_draw(const Mesh *mesh) {
+  // perhaps vao needs to be modified by model for transform???
   glBindVertexArray(mesh->vao);
   glDrawElements(GL_TRIANGLES, mesh->index_count, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);

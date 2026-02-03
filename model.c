@@ -17,8 +17,11 @@ void model_set_position(Model *model, vec3 pos) {
   glm_mat4_identity(model->transform);
   glm_translate(model->transform, pos);
 }
+void model_spin(Model *model, float angle) {
+  glm_spin(model->transform, angle, (vec3) {0.0, 1.0, 0.0});
+}
 
-void model_draw(const Model *model, GLuint shader_program) {
+void model_draw(Model *model, GLuint shader_program) {
   GLuint model_location = glGetUniformLocation(
       shader_program, 
       "model"

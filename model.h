@@ -10,7 +10,8 @@ typedef struct {
 
 void model_init(Model *model, Mesh *mesh);
 void model_set_position(Model *model, vec3 pos);
-void model_draw(const Model *model, GLuint shader_program);
+void model_spin(Model *model, float angle);
+void model_draw(Model *model, GLuint shader_program);
 
 Model model_create(Mesh *mesh);
 

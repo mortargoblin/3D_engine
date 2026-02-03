@@ -43,19 +43,30 @@ int main() {
     mesh_generate_random_colors(&scene_meshes[i]);
   }
 
+  /*
   Model models[mesh_count * sizeof(Model)];
 
   for (int i = 0; i < mesh_count; i++) {
     models[i] = model_create(&scene_meshes[i]);
   }
-
-  /* TODO: FIX
-  Scene scene = scene_create(2, models);
-  if (scene) {
-    printf("wtf\n");
-  }
-  printf("SCENE: %d\n", scene.model_count);
   */
+
+  Model models[] = {
+    model_create(&scene_meshes[0]),
+    model_create(&scene_meshes[1]),
+  };
+  // TODO: FIX
+  Scene scene = scene_create(2, models);
+
+  printf("SCENE.MODEL_COUNT: %d\n", scene.model_count);
+  printf("SCENE.MODELS: %p\n", scene.models);
+
+  double model_pos = 10;
+  double model_spin_angle = 10;
+
+  for (int i = 0; i < 3; i++) {
+    printf("model transform: %f\n", scene.models[1].transform);
+  }
 
   /////// MAIN LOOP ///////
   while(!app_should_close(&app)) {
@@ -74,8 +85,14 @@ int main() {
         app.delta_time,
         (float)app.screen_width / app.screen_height
         );
+    
+    // haram: type mismatch etc
+    model_pos -= 0.01;
+    model_spin_angle -= 0.01;
+    model_set_position(&scene.models[1], (vec3){model_pos, 0.1, 0});
+    model_spin(&scene.models[1], model_spin_angle);
 
-    renderer_draw(models, &camera);
+    renderer_draw(&scene, &camera);
 
     app_swap_buffers(&app);
 
