@@ -25,8 +25,13 @@ void model_transform_update(Model *model) {
   glm_scale(model->transform, model->scale);
 }
 
-void model_set_position(Model *model, vec3 pos) {
-  glm_vec3_copy(pos, model->position);
+void model_set_position(Model *model, vec3 position) {
+  glm_vec3_copy(position, model->position);
+}
+
+void model_move(Model *model, vec3 direction) {
+  // TODO: improve :D
+  glm_vec3_add(direction, model->position, model->position);
 }
 
 void model_spin(Model *model, float angle) {

@@ -14,7 +14,8 @@ typedef struct {
 void model_init(Model *model, Mesh *mesh);
 void model_transform_update(Model *model);
 // void model_transform_init(Model *model);
-void model_set_position(Model *model, vec3 pos);
+void model_set_position(Model *model, vec3 position);
+void model_move(Model *model, vec3 direction);
 void model_spin(Model *model, float angle);
 void model_set_rotation(Model *model, float angle);
 void model_draw(Model *model, GLuint shader_program);
