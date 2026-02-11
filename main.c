@@ -53,13 +53,8 @@ int main() {
 
   Scene scene = scene_create(model_count, models);
 
-  double idx = 0;
-  // TICKS for game logic
-  // TPS should be 60, Tick time should be 16.666...
-
   /////// MAIN LOOP ///////
   while(!app_should_close(&app)) {
-    idx += 0.05;
 
     app_update_time(&app);
 
@@ -82,9 +77,9 @@ int main() {
     // transform logic
 
     model_set_position(&scene.models[0], (vec3) {
-        0, // (cos(idx) * 2 ), 
-        (cos(idx)), 
-        (sin(idx)), 
+        (cos(app.time) * 4), 
+        (cos(app.time) * 4), 
+        (sin(app.time) * 4), 
         });
     model_spin(&scene.models[0], 0.02);
 
