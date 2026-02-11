@@ -1,8 +1,6 @@
 #include "camera.h"
 
-#include <math.h>
-
-#define MAX_PITCH 1.5f   // ~86 degrees
+#define MAX_PITCH 1.5f // ~86 degrees
 
 static void clamp_pitch(float *pitch) {
   if (*pitch > MAX_PITCH)  *pitch = MAX_PITCH;
@@ -18,7 +16,7 @@ Camera camera_create(vec3 start_position, float aspect_ratio) {
   cam.pitch = 0.0f;
 
   cam.fov = 90.0f;
-  cam.speed = 3.0f;
+  cam.speed = 5.0f;
   cam.sprint_multiplier = 2.0f;
 
   glm_perspective(
@@ -45,7 +43,7 @@ void camera_update(
 
   // prevent float overflow
   if (cam->yaw > GLM_PI * 2.0f) cam->yaw -= GLM_PI * 2.0f;
-  if (cam->yaw < 0.0f)          cam->yaw += GLM_PI * 2.0f;
+  if (cam->yaw < 0.0f) cam->yaw += GLM_PI * 2.0f;
 
   // direction vectors
   vec3 forward = {
@@ -69,6 +67,7 @@ void camera_update(
     velocity *= cam->sprint_multiplier;
   }
 
+  // TODO: swap out to conform to player pos, etc
   if (glm_vec3_norm(input->move) > 0.0f) {
     vec3 move = {0};
     glm_vec3_scale(forward, -input->move[2], move);

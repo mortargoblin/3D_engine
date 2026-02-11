@@ -30,7 +30,7 @@ void renderer_init(void) {
   mvp_location = glGetUniformLocation(program, "MVP");
 }
 
-void renderer_draw(const Mesh *mesh, const Camera *camera) {
+void renderer_draw(Scene *scene, const Camera *camera) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glUseProgram(program);
 
@@ -51,7 +51,15 @@ void renderer_draw(const Mesh *mesh, const Camera *camera) {
       &mvp[0][0]
       );
 
-  mesh_draw(mesh);
+  for (int i = 0; i < scene->model_count; i++) {
+    // what the fuuck
+    // mesh_draw(scene->models[i].mesh);
+    model_draw(&scene->models[i], program);
+  }
+}
+
+void renderer_clear() {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void renderer_shutdown(void) {

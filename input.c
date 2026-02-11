@@ -1,4 +1,3 @@
-#include "app.h"
 #include "input.h"
 
 #include <string.h>
@@ -37,7 +36,7 @@ void input_update(InputState *out, GLFWwindow *window, float delta_time) {
   float mouse_sensitivity = 0.0025f;
   out->yaw   = -(float)dx * mouse_sensitivity;
   out->pitch = -(float)dy * mouse_sensitivity;
-  printf("yaw: %f\n", out->yaw);
+  // printf("yaw: %f\n", out->yaw);
 
   //// Keyboard ////
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {

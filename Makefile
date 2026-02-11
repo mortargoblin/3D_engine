@@ -18,7 +18,7 @@ CXXFLAGS = -Wall -Wextra -std=c++17 $(INCLUDES)
 LIBS = -lGL -lGLEW -lEGL -lGLU -lOpenGL -lglfw -lstdc++ -lm
 
 # Target
-game: main.o shader.o shader_c.o app.c input.c camera.c renderer.c mesh.c
+game: main.o shader.o shader_c.o app.c input.c camera.c renderer.c mesh.c model.c scene.c player.c
 	$(CC) $^ -o $@ $(LIBS)
 
 # C object

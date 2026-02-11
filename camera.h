@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <math.h>
 #include "include/cglm/cglm.h"
 #include "input.h"
 
@@ -18,10 +19,8 @@ typedef struct {
     mat4 projection;
 } Camera;
 
-/* Lifecycle */
 Camera camera_create(vec3 start_position, float aspect_ratio);
 
-/* Per-frame update */
 void camera_update(
     Camera *cam,
     const InputState *input,
@@ -29,7 +28,6 @@ void camera_update(
     float aspect_ratio
 );
 
-/* Helpers */
 void camera_get_forward(const Camera *cam, vec3 out);
 void camera_get_right(const Camera *cam, vec3 out);
 

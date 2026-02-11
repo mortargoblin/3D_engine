@@ -1,13 +1,17 @@
-// 3D Engine MAIN.C
+// 3D Engine MAIN
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #include "app.h"
 #include "input.h"
 #include "camera.h"
+#include "player.h"
 #include "mesh.h"
+#include "model.h"
+#include "scene.h"
 #include "renderer.h"
 
 int main() {
@@ -15,6 +19,12 @@ int main() {
   srand(time(NULL));
 
   App app = {0};
+
+  // 1024 768
+  if (!app_init(&app, 1920, 1080, "3D Engine")) {
+    return -1;
+  }
+
   InputState input;
 
   Camera camera = camera_create(
@@ -22,20 +32,28 @@ int main() {
       (float)app.screen_width / app.screen_height
       );
 
-  // 1024 768
-  if (!app_init(&app, 1024, 768, "3D Engine")) {
-    return -1;
-  }
-
   input_init(app.window);
   renderer_init();
 
-  Mesh mesh = mesh_load_obj("assets/120KRH92.obj");
+  // create meshes
+  int mesh_count = 2;
+  Mesh scene_meshes[] = {
+    mesh_load_obj("assets/elite_ship.obj"),
+    mesh_load_obj("assets/simple_house.obj"),
+  };
 
-  mesh_generate_random_colors(&mesh);
+  // create models (mesh + transform etc)
+  Model models[mesh_count];
+  int model_count = 0;
+
+  for (int i = 0; i < mesh_count; i++) {
+    models[i] = model_create(&scene_meshes[i]);
+    model_count++;
+  }
+
+  Scene scene = scene_create(model_count, models);
 
   /////// MAIN LOOP ///////
-  double current_time = glfwGetTime();
   while(!app_should_close(&app)) {
 
     app_update_time(&app);
@@ -52,11 +70,24 @@ int main() {
         app.delta_time,
         (float)app.screen_width / app.screen_height
         );
+    
+    // model_transform_update(&scene.models[1]);
+    scene_transform_update(&scene);
 
-    renderer_draw(&mesh, &camera);
+    // transform logic
 
+    model_set_position(&scene.models[0], (vec3) {
+        (cos(app.time) * 4), 
+        (cos(app.time) * 4), 
+        (sin(app.time) * 4), 
+        });
+    model_spin(&scene.models[0], 0.02);
+
+    model_set_position(&scene.models[1], (vec3) {
+        6,0,0
+        });
+    renderer_draw(&scene, &camera);
     app_swap_buffers(&app);
-
   }
 
   app_shutdown(&app);
