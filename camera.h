@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <math.h>
 #include "include/cglm/cglm.h"
 #include "input.h"
 

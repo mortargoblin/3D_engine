@@ -1,7 +1,5 @@
 #include "camera.h"
 
-#include <math.h>
-
 #define MAX_PITCH 1.5f // ~86 degrees
 
 static void clamp_pitch(float *pitch) {
@@ -18,7 +16,7 @@ Camera camera_create(vec3 start_position, float aspect_ratio) {
   cam.pitch = 0.0f;
 
   cam.fov = 90.0f;
-  cam.speed = 3.0f;
+  cam.speed = 5.0f;
   cam.sprint_multiplier = 2.0f;
 
   glm_perspective(

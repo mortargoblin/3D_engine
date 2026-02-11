@@ -1,8 +1,5 @@
 #include "mesh.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "include/fast_obj-1.3/fast_obj.h"
 #include "include/fast_obj-1.3/fast_obj.c"
 
@@ -68,11 +65,12 @@ Mesh mesh_load_obj(const char *path) {
   fast_obj_destroy(obj);
   free(indices);
 
+  float colors[] = {0.1, 0.1, 0.8};
   mesh_generate_random_colors(&mesh);
+  // mesh_set_color(&mesh, colors);
 
   return mesh;
 }
-
 
 void mesh_draw(const Mesh *mesh) {
   // perhaps vao needs to be modified by model for transform???
@@ -81,14 +79,36 @@ void mesh_draw(const Mesh *mesh) {
   glBindVertexArray(0);
 }
 
-void mesh_generate_random_colors(Mesh *mesh) {
-  GLfloat *colors = malloc(mesh->vertex_count * 3 * sizeof(GLfloat));
+void mesh_set_color(Mesh *mesh, float colors[3]) {
+  GLfloat *gl_colors = malloc(mesh->vertex_count * 3 * sizeof(GLfloat));
+
+  float r = colors[0];
+  float g = colors[1];
+  float b = colors[2];
+  printf("mesh %p: r: %f, g: %f, b: %f\n", mesh, r, g, b);
 
   for (size_t i = 0; i < mesh->vertex_count; i++) {
-    colors[i * 3 + 0] = (float)rand() / RAND_MAX;
-    colors[i * 3 + 1] = (float)rand() / RAND_MAX * 0.5f;
-    colors[i * 3 + 2] = (float)rand() / RAND_MAX * 0.5f;
+    gl_colors[i * 3 + 0] = r;
+    gl_colors[i * 3 + 1] = g;
+    gl_colors[i * 3 + 2] = b;
   }
+
+  mesh_bind_colors(mesh, gl_colors);
+}
+
+void mesh_generate_random_colors(Mesh *mesh) {
+  GLfloat *random_colors = malloc(mesh->vertex_count * 3 * sizeof(GLfloat));
+
+  for (size_t i = 0; i < mesh->vertex_count; i++) {
+    random_colors[i * 3 + 0] = (float)rand() / RAND_MAX;
+    random_colors[i * 3 + 1] = (float)rand() / RAND_MAX;
+    random_colors[i * 3 + 2] = (float)rand() / RAND_MAX;
+  }
+
+  mesh_bind_colors(mesh, random_colors);
+}
+
+void mesh_bind_colors(Mesh *mesh, GLfloat *colors) {
 
   glBindVertexArray(mesh->vao);
 

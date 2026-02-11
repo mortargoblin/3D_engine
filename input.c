@@ -1,4 +1,3 @@
-#include "app.h"
 #include "input.h"
 
 #include <string.h>

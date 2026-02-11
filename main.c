@@ -36,10 +36,9 @@ int main() {
   renderer_init();
 
   // create meshes
-  int mesh_count = 3;
+  int mesh_count = 2;
   Mesh scene_meshes[] = {
-    mesh_load_obj("assets/120KRH92.obj"),
-    mesh_load_obj("assets/hellcat.obj"),
+    mesh_load_obj("assets/elite_ship.obj"),
     mesh_load_obj("assets/simple_house.obj"),
   };
 
@@ -55,6 +54,8 @@ int main() {
   Scene scene = scene_create(model_count, models);
 
   double idx = 0;
+  // TICKS for game logic
+  // TPS should be 60, Tick time should be 16.666...
 
   /////// MAIN LOOP ///////
   while(!app_should_close(&app)) {
@@ -80,25 +81,16 @@ int main() {
 
     // transform logic
 
-    model_set_position(&scene.models[1], (vec3) {
-        (sin(idx) * 2 ), 
-        (cos(idx) * 2 ), 
-        (sin(idx) * 2 ), 
-        });
-    model_spin(&scene.models[1], 0.02);
-
     model_set_position(&scene.models[0], (vec3) {
-        13, 
-        0,
-        0
+        0, // (cos(idx) * 2 ), 
+        (cos(idx)), 
+        (sin(idx)), 
         });
+    model_spin(&scene.models[0], 0.02);
 
-    model_set_position(&scene.models[2], (vec3) {
-        -7, 
-        -3,
-        0
+    model_set_position(&scene.models[1], (vec3) {
+        6,0,0
         });
-
     renderer_draw(&scene, &camera);
     app_swap_buffers(&app);
   }
