@@ -77,9 +77,9 @@ int main() {
     // transform logic
 
     model_set_position(&scene.models[0], (vec3) {
-        (cos(app.time) * 4), 
-        (cos(app.time) * 4), 
-        (sin(app.time) * 4), 
+        0, // (cos(app.time * 2) * 2), 
+        (cos(app.time * 2) * 2), 
+        0 // (sin(app.time * 2) * 2), 
         });
     model_spin(&scene.models[0], 0.02);
 
