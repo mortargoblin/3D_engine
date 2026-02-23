@@ -1,3 +1,5 @@
+![banner](img/banner.png "Screenshot")
+
 ## TODO
 
 - texture loading

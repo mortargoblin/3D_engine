@@ -36,10 +36,11 @@ int main() {
   renderer_init();
 
   // create meshes
-  int mesh_count = 2;
+  int mesh_count = 3;
   Mesh scene_meshes[] = {
     mesh_load_obj("assets/elite_ship.obj"),
     mesh_load_obj("assets/simple_house.obj"),
+    mesh_load_obj("assets/120KRH92.obj"),
   };
 
   // create models (mesh + transform etc)
@@ -81,11 +82,19 @@ int main() {
         (cos(app.time * 2) * 2), 
         0 // (sin(app.time * 2) * 2), 
         });
+
     model_spin(&scene.models[0], 0.02);
 
     model_set_position(&scene.models[1], (vec3) {
         6,0,0
         });
+
+    model_set_position(&scene.models[0], (vec3) {
+        -5, // (cos(app.time * 2) * 2), 
+        0, 
+        -10 // (sin(app.time * 2) * 2), 
+        });
+    
     renderer_draw(&scene, &camera);
     app_swap_buffers(&app);
   }

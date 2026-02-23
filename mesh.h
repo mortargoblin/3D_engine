@@ -18,15 +18,11 @@ typedef struct {
 } Mesh;
 
 Mesh mesh_load_obj(const char *path);
-
+GLuint mesh_load_bmp(const char *path);
 void mesh_set_color(Mesh *mesh, float colors[3]);
-
 void mesh_generate_random_colors(Mesh *mesh);
-
 void mesh_bind_colors(Mesh *mesh, GLfloat *colors);
-
 void mesh_draw(const Mesh *mesh);
-
 void mesh_destroy(Mesh *mesh);
 
 #endif // MESH_H

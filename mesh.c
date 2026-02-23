@@ -72,6 +72,29 @@ Mesh mesh_load_obj(const char *path) {
   return mesh;
 }
 
+// UNFINISHED! TODO: IMPLEMENT
+GLuint mesh_load_bmp(const char *path) {
+  unsigned char header[54]; // bmp files contain a 54-byte header
+  unsigned int data_pos; // position where the actual data begins
+  unsigned int width, height;
+  unsigned int image_size; // width*height*3
+
+  // actual RGB data
+
+  unsigned char *data;
+
+  FILE *file = fopen(path, "rb");
+  if (!file) {
+    printf("couldnt open image at path: %s\n", path);
+    return -1;
+  } else if (fread(header, 1, 54, file) != 54) {
+    printf("not a correct BMP file\n");
+    return -1;
+  }
+
+  return 100;
+}
+
 void mesh_draw(const Mesh *mesh) {
   // perhaps vao needs to be modified by model for transform???
   glBindVertexArray(mesh->vao);
